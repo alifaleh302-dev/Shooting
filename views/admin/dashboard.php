@@ -3,7 +3,7 @@
  * لوحة التحكم الرئيسية - Admin Dashboard
  */
 $currentPage = 'dashboard';
-require __DIR__ . '/../layouts/admin-header.php';
+require __DIR__ . '/../layout/admin-header.php';
 ?>
 
 <!-- المحتوى الرئيسي -->
@@ -294,4 +294,4 @@ function renderTopProducts(products) {
 }
 </script>
 
-<?php require __DIR__ . '/../layouts/admin-footer.php'; ?>
+<?php require __DIR__ . '/../layout/admin-footer.php'; ?>

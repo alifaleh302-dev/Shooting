@@ -3,7 +3,7 @@
  * صفحة إدارة المنتجات - Admin Products
  */
 $currentPage = 'products';
-require __DIR__ . '/../layouts/admin-header.php';
+require __DIR__ . '/../layout/admin-header.php';
 ?>
 
 <main class="main-content flex-grow-1 p-4">
@@ -223,4 +223,4 @@ async function searchProducts() {
 }
 </script>
 
-<?php require __DIR__ . '/../layouts/admin-footer.php'; ?>
+<?php require __DIR__ . '/../layout/admin-footer.php'; ?>
