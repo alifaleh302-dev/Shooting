@@ -1,0 +1,143 @@
+/**
+ * ============================================
+ * أنماط واجهة المتجر - Store CSS
+ * ============================================
+ */
+
+/* بطاقات المنتجات */
+.product-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* بطاقات التصنيفات */
+.category-card {
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* القسم البطولي */
+.hero-section {
+    background-size: cover;
+    background-position: center;
+}
+
+/* شريط التنقل */
+.navbar-brand {
+    font-size: 1.4rem;
+}
+
+/* الأزرار */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* سلة التسوق */
+.cart-item {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+/* خيارات الألوان */
+.color-option {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    display: inline-block;
+    margin: 3px;
+    transition: all 0.2s;
+}
+
+.color-option:hover,
+.color-option.active {
+    border-color: #0d6efd;
+    transform: scale(1.1);
+}
+
+/* خيارات الأحجام */
+.size-option {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    margin: 3px;
+}
+
+.size-option:hover,
+.size-option.active {
+    border-color: #0d6efd;
+    background-color: #0d6efd;
+    color: white;
+}
+
+/* Footer */
+footer a:hover {
+    color: white !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .hero-section .display-4 {
+        font-size: 1.8rem;
+    }
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+}
+
+/* لا يوجد صورة - Placeholder */
+.no-image {
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 3rem;
+}
+
+/* تحميل Spinner */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+/* تنبيهات */
+.alert-floating {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    min-width: 300px;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { top: 0; opacity: 0; }
+    to { top: 80px; opacity: 1; }
+}
