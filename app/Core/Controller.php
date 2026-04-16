@@ -91,7 +91,17 @@ class Controller
     {
         $errors = [];
         foreach ($required as $field) {
-            if (!isset($data[$field]) || trim($data[$field]) === '') {
+            if (!isset($data[$field])) {
+                $errors[$field] = "الحقل {$field} مطلوب";
+                continue;
+            }
+            $value = $data[$field];
+            // For arrays: fail only if empty. For scalars: trim + check not empty.
+            if (is_array($value)) {
+                if (empty($value)) {
+                    $errors[$field] = "الحقل {$field} مطلوب";
+                }
+            } elseif (is_null($value) || trim((string)$value) === '') {
                 $errors[$field] = "الحقل {$field} مطلوب";
             }
         }
