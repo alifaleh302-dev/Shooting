@@ -109,8 +109,13 @@ class AccountingController extends Controller
 
             $entry = $this->journal->getWithLines($entryId);
             $this->jsonSuccess($entry, 'تم إنشاء القيد بنجاح', 201);
-        } catch (\Exception $e) {
-            $this->jsonError('فشل إنشاء القيد: ' . $e->getMessage(), 500);
+        } catch (\Throwable $e) {
+            // Catch Throwable (covers both Exception and Error)
+            $this->jsonError(
+                'فشل إنشاء القيد: ' . $e->getMessage()
+                . ' [' . basename($e->getFile()) . ':' . $e->getLine() . ']',
+                500
+            );
         }
     }
 
@@ -145,8 +150,9 @@ class AccountingController extends Controller
             $this->journal->createExpenseEntry($data);
 
             $this->jsonSuccess(null, 'تم تسجيل المصروف والقيد المحاسبي بنجاح', 201);
-        } catch (\Exception $e) {
-            $this->jsonError('فشل تسجيل المصروف: ' . $e->getMessage(), 500);
+        } catch (\Throwable $e) {
+            $this->jsonError('فشل تسجيل المصروف: ' . $e->getMessage()
+                . ' [' . basename($e->getFile()) . ':' . $e->getLine() . ']', 500);
         }
     }
 
