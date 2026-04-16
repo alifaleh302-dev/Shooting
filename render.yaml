@@ -1,0 +1,63 @@
+# ============================================
+# Render.com Deployment Configuration
+# ============================================
+# هذا الملف يحدد خدمات الويب وقاعدة البيانات على Render
+# This file defines the web services and database on Render
+
+services:
+  # ============================================
+  # خدمة الويب (Web Service) - PHP Application
+  # ============================================
+  - type: web
+    name: clothing-store
+    runtime: php
+    
+    # مستودع الكود
+    repo: https://github.com/ll361231dsh-debug/-.git
+    branch: main
+    
+    # المنطقة
+    region: frankfurt  # أو oregon, singapore حسب موقع الجمهور
+    
+    # الخطة
+    plan: free  # أو starter, standard
+    
+    # أمر البناء - تثبيت التبعيات وتنفيذ الترحيل
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php database/migrate.php
+    
+    # أمر التشغيل - تشغيل خادم PHP المدمج
+    startCommand: php -S 0.0.0.0:$PORT -t public public/index.php
+    
+    # فحص الصحة
+    healthCheckPath: /api/health
+    
+    # متغيرات البيئة
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_URL
+        fromRenderService:
+          type: web
+          name: clothing-store
+          property: url
+      - key: APP_SECRET
+        generateValue: true
+      - key: APP_TIMEZONE
+        value: Asia/Riyadh
+      # رابط قاعدة البيانات - يتم ربطه تلقائياً
+      - key: DATABASE_URL
+        fromDatabase:
+          name: clothing-store-db
+          property: connectionString
+
+  # ============================================
+  # قاعدة البيانات (PostgreSQL)
+  # ============================================
+databases:
+  - name: clothing-store-db
+    plan: free  # أو starter, standard
+    databaseName: clothing_store
+    user: clothing_store_user
+    region: frankfurt
