@@ -1,0 +1,61 @@
+# ============================================
+# .dockerignore — exclude files from Docker build context
+# ============================================
+
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+*.md
+docs/
+
+# Environment files (should be injected by Render, not baked in)
+.env
+.env.*
+!.env.example
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Dependency directories (will be installed in builder stage)
+vendor/
+node_modules/
+
+# Build artifacts & caches
+*.cache
+.phpunit.result.cache
+
+# Tests
+tests/
+phpunit.xml
+phpunit.xml.dist
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Docker files themselves
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# Render config (used by Render, not needed inside container)
+render.yaml
+
+# OS junk
+*.bak
+*.tmp
