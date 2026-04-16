@@ -27,6 +27,44 @@ if ($appConfig['environment'] === 'development') {
 session_name($appConfig['session']['name']);
 session_start();
 
+// Global fatal error handler - returns JSON instead of blank 500
+register_shutdown_function(function () {
+    $err = error_get_last();
+    if ($err && in_array($err['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR, E_RECOVERABLE_ERROR], true)) {
+        if (!headers_sent()) {
+            http_response_code(500);
+            header('Content-Type: application/json; charset=utf-8');
+        }
+        echo json_encode([
+            'success' => false,
+            'message' => 'Fatal PHP error',
+            'error'   => [
+                'type'    => $err['type'],
+                'message' => $err['message'],
+                'file'    => basename($err['file'] ?? ''),
+                'line'    => $err['line'] ?? 0,
+            ],
+        ], JSON_UNESCAPED_UNICODE);
+    }
+});
+
+set_exception_handler(function (\Throwable $e) {
+    if (!headers_sent()) {
+        http_response_code(500);
+        header('Content-Type: application/json; charset=utf-8');
+    }
+    echo json_encode([
+        'success' => false,
+        'message' => 'Uncaught exception',
+        'error'   => [
+            'class'   => get_class($e),
+            'message' => $e->getMessage(),
+            'file'    => basename($e->getFile()),
+            'line'    => $e->getLine(),
+        ],
+    ], JSON_UNESCAPED_UNICODE);
+});
+
 // السماح بطلبات CORS
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
