@@ -1,0 +1,26 @@
+# Ignore IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore uploaded files
+public/assets/images/uploads/*
+!public/assets/images/uploads/.gitkeep
+
+# Ignore environment file
+.env
+
+# Ignore logs
+*.log
+
+# Ignore vendor (composer dependencies)
+vendor/
+composer.lock
+
+# Ignore local config overrides
+config/*.local.php
