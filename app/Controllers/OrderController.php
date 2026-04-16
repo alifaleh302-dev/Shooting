@@ -153,6 +153,27 @@ class OrderController extends Controller
     public function stats(): void
     {
         $data = $this->order->getDashboardStats();
-        $this->jsonSuccess($data, 'إحصائيات الطلبات');
+        
+        // إضافة إحصائيات التذاكر المفتوحة
+        $ticketModel = new \App\Models\SupportTicket();
+        $ticketStats = $ticketModel->getStats();
+        $data['open_tickets'] = array_reduce($ticketStats['by_status'], function($carry, $item) {
+            if (in_array($item['status'], ['open', 'waiting_admin', 'in_progress'])) {
+                return $carry + (int)$item['count'];
+            }
+            return $carry;
+        }, 0);
+
+        // إضافة إحصائيات المخزون المنخفض
+        $lowStock = $this->db->fetchOne(
+            "SELECT COUNT(*) as count FROM inventory WHERE quantity <= low_stock_threshold"
+        );
+        $data['low_stock_count'] = (int)$lowStock['count'];
+
+        // إضافة آخر 5 طلبات
+        $recentOrders = $this->order->paginate(1, 5, 'created_at', 'DESC');
+        $data['recent_orders'] = $recentOrders['data'];
+
+        $this->jsonSuccess($data, 'إحصائيات لوحة التحكم الشاملة');
     }
 }

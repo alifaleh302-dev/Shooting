@@ -81,11 +81,24 @@ class Router
 
         // لم يتم العثور على المسار - 404
         http_response_code(404);
-        echo json_encode([
-            'success' => false,
-            'message' => 'المسار غير موجود - Route not found',
-            'path'    => $requestUri
-        ], JSON_UNESCAPED_UNICODE);
+        
+        // إذا كان الطلب يبدأ بـ /api، نرجع JSON
+        if (str_starts_with($requestUri, '/api')) {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode([
+                'success' => false,
+                'message' => 'المسار غير موجود - Route not found',
+                'path'    => $requestUri
+            ], JSON_UNESCAPED_UNICODE);
+        } else {
+            // لطلبات المتصفح، نعرض صفحة 404 الجميلة
+            $viewFile = __DIR__ . '/../../views/404.php';
+            if (file_exists($viewFile)) {
+                require $viewFile;
+            } else {
+                echo "<h1>404 - الصفحة غير موجودة</h1>";
+            }
+        }
     }
 
     /**

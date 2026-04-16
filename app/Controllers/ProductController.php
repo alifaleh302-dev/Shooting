@@ -149,6 +149,16 @@ class ProductController extends Controller
     }
 
     /**
+     * جلب جميع التصنيفات
+     * GET /api/categories
+     */
+    public function categories(): void
+    {
+        $data = $this->product->getCategories();
+        $this->jsonSuccess($data, 'تم جلب التصنيفات بنجاح');
+    }
+
+    /**
      * توليد رابط مختصر من الاسم
      */
     private function generateSlug(string $name): string

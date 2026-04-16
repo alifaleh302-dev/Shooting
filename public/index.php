@@ -111,6 +111,7 @@ $router->get('/api/products', 'ProductController', 'index');
 $router->get('/api/products/featured', 'ProductController', 'featured');
 $router->get('/api/products/search', 'ProductController', 'search');
 $router->get('/api/products/category/{id}', 'ProductController', 'byCategory');
+$router->get('/api/categories', 'ProductController', 'categories');
 $router->get('/api/products/{id}', 'ProductController', 'show');
 $router->post('/api/products', 'ProductController', 'store');
 $router->put('/api/products/{id}', 'ProductController', 'update');

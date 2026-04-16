@@ -163,3 +163,13 @@ class Product extends Model
         ];
     }
 }
+
+    /**
+     * جلب جميع التصنيفات النشطة
+     * Get all active categories
+     */
+    public function getCategories(): array
+    {
+        $sql = "SELECT * FROM categories WHERE is_active = 1 ORDER BY name ASC";
+        return $this->db->fetchAll($sql);
+    }
